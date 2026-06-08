@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KUROSTORE - Anshin & Hayai Digital Services</title>
+    <style>
+        :root {
+            --bg-color: #060713;
+            --card-bg: rgba(26, 28, 41, 0.65);
+            --card-item-bg: rgba(34, 37, 56, 0.8);
+            --neon-blue: #00f3ff;
+            --neon-orange: #ff9a00;
+            --text-main: #ffffff;
+            --text-muted: #a0a5b5;
+        }
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* --- BACKGROUND ANIMASI PREMIUM & PROPORSIAL --- */
+        .cyber-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: 
+                radial-gradient(circle at 10% 20%, rgba(0, 243, 255, 0.05) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(255, 154, 0, 0.06) 0%, transparent 45%),
+                linear-gradient(145deg, #070814 0%, #0f1126 50%, #05060f 100%);
+        }
+        .cyber-bg::before, .cyber-bg::after {
+            content: '';
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: var(--neon-blue);
+            filter: blur(120px);
+            opacity: 0.12;
+            animation: floatLeft 12s infinite alternate ease-in-out;
+        }
+        .cyber-bg::after {
+            background: var(--neon-orange);
+            right: -50px;
+            bottom: 10%;
+            width: 400px;
+            height: 400px;
+            filter: blur(150px);
+            opacity: 0.08;
+            animation: floatRight 16s infinite alternate ease-in-out;
+        }
+        @keyframes floatLeft {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(60px, 80px) scale(1.2); }
+        }
+        @keyframes floatRight {
+            0% { transform: translate(0, 0) scale(1.1); }
+            100% { transform: translate(-80px, -60px) scale(0.9); }
+        }
+
+        header {
+            text-align: center;
+            padding: 3.5rem 1rem 2.5rem 1rem;
+            background: linear-gradient(180deg, rgba(0,243,255,0.12) 0%, transparent 100%);
+            border-bottom: 1px solid rgba(0,243,255,0.15);
+            backdrop-filter: blur(4px);
+        }
+        h1 {
+            color: var(--neon-orange);
+            margin: 0;
+            font-size: 2.6rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            text-shadow: 0 0 12px rgba(255,154,0,0.4);
+        }
+        .subtitle {
+            color: var(--neon-blue);
+            font-weight: bold;
+            font-size: 1.2rem;
+            letter-spacing: 1px;
+            margin-top: 5px;
+        }
+        .tagline {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
+        .container {
+            padding: 1rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        .category-title {
+            border-left: 4px solid var(--neon-blue);
+            padding-left: 10px;
+            margin-top: 2.5rem;
+            text-transform: uppercase;
+            font-size: 1.3rem;
+            letter-spacing: 1px;
+            text-shadow: 0 0 8px rgba(0,243,255,0.3);
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+        @media (min-width: 768px) {
+            .grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid rgba(0,243,255,0.12);
+            border-radius: 16px;
+            padding: 1.5rem;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            display: flex;
+            flex-direction: column;
+            transition: border-color 0.3s;
+        }
+        .card:hover {
+            border-color: rgba(0,243,255,0.3);
+        }
+        .card h3 {
+            margin-top: 0;
+            color: var(--neon-blue);
+            font-size: 1.4rem;
+            border-bottom: 1px solid rgba(160,165,181,0.15);
+            padding-bottom: 8px;
+            margin-bottom: 15px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+        input, select {
+            width: 100%;
+            padding: 12px;
+            background-color: rgba(13, 14, 21, 0.8);
+            border: 1px solid rgba(0,243,255,0.25);
+            border-radius: 8px;
+            color: #fff;
+            font-size: 0.95rem;
+            box-sizing: border-box;
+        }
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--neon-orange);
+            box-shadow: 0 0 8px rgba(255,154,0,0.2);
+        }
+        
+        /* PRICE GRID */
+        .price-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+            margin-top: 5px;
+        }
+        .price-item {
+            background-color: var(--card-item-bg);
+            border: 1px solid rgba(255,255,255,0.03);
+            border-radius: 8px;
+            padding: 11px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            user-select: none;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .price-item .item-title {
+            font-size: 0.85rem;
+            font-weight: bold;
+            color: #fff;
+        }
+        .price-item .item-cost {
+            font-size: 0.8rem;
+            color: var(--neon-blue);
+            margin-top: 2px;
+        }
+        .price-item:hover {
+            border-color: rgba(0,243,255,0.4);
+            transform: translateY(-1px);
+        }
+        .price-item.selected {
+            background: linear-gradient(135deg, rgba(255,154,0,0.25) 0%, rgba(255,154,0,0.05) 100%);
+            border-color: var(--neon-orange);
+            box-shadow: 0 0 12px rgba(255,154,0,0.25);
+        }
+        .price-item.selected .item-cost {
+            color: var(--neon-orange);
+        }
+
+        .section-divider {
+            grid-column: 1 / -1;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            color: var(--neon-blue);
+            margin: 12px 0 5px 0;
+            letter-spacing: 1px;
+            opacity: 0.85;
+        }
+
+        .btn-order {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            margin-top: 18px;
+            background-color: transparent;
+            color: var(--neon-orange);
+            text-align: center;
+            text-decoration: none;
+            border: 1px solid var(--neon-orange);
+            border-radius: 8px;
+            font-weight: bold;
+            text-transform: uppercase;
+            cursor: pointer;
+            font-size: 0.95rem;
+            transition: all 0.3s;
+        }
+        .btn-order:hover {
+            background-color: var(--neon-orange);
+            color: var(--bg-color);
+            box-shadow: 0 0 15px rgba(255,154,0,0.4);
+        }
+
+        /* --- POP-UP MODAL SYSTEM (INVOICE, QRIS & ACCOUNT LIST) --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(4, 5, 15, 0.9);
+            backdrop-filter: blur(8px);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            padding: 15px;
+            box-sizing: border-box;
+        }
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .modal-box {
+            background: #111424;
+            border: 1px solid var(--neon-blue);
+            box-shadow: 0 0 25px rgba(0, 243, 255, 0.25);
+            border-radius: 16px;
+            width: 100%;
+            max-width: 480px;
+            padding: 1.5rem;
+            box-sizing: border-box;
+            max-height: 92vh;
+            overflow-y: auto;
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
+        .modal-overlay.active .modal-box {
+            transform: scale(1);
+        }
+        .modal-header {
+            text-align: center;
+            border-bottom: 1px dashed rgba(0, 243, 255, 0.2);
+            padding-bottom: 12px;
+            margin-bottom: 15px;
+        }
+        .modal-header h4 {
+            margin: 0;
+            color: var(--neon-orange);
+            font-size: 1.4rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .invoice-detail {
+            background: rgba(255,255,255,0.02);
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+            border: 1px solid rgba(160,165,181,0.1);
+        }
+        .invoice-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 6px;
+        }
+        .invoice-row.total {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 8px;
+            margin-top: 8px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            color: var(--neon-orange);
+        }
+        .payment-method-box {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+        .qris-container {
+            background: white;
+            padding: 8px;
+            border-radius: 12px;
+            display: inline-block;
+            margin: 6px auto;
+        }
+        .qris-img {
+            width: 170px;
+            height: 170px;
+            display: block;
+            object-fit: cover;
+            /* Memotong otomatis frame luar agar fokus ke inti QR Code */
+            object-position: center; 
+        }
+        .bank-list-box {
+            background: rgba(0, 243, 255, 0.04);
+            border: 1px solid rgba(0, 243, 255, 0.15);
+            border-radius: 8px;
+            padding: 12px;
+            margin-top: 12px;
+            text-align: left;
+            font-size: 0.85rem;
+        }
+        .bank-item-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 4px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .bank-item-row:last-child {
+            border-bottom: none;
+        }
+        .num-highlight {
+            font-family: monospace;
+            font-size: 0.95rem;
+            color: var(--neon-blue);
+            font-weight: bold;
+        }
+        .modal-actions {
+            display: flex;
+            gap: 10px;
+        }
+        .btn-modal-close {
+            flex: 1;
+            padding: 11px;
+            background: transparent;
+            border: 1px solid var(--text-muted);
+            color: var(--text-muted);
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .btn-modal-confirm {
+            flex: 2;
+            padding: 11px;
+            background: var(--neon-orange);
+            border: none;
+            color: var(--bg-color);
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            text-transform: uppercase;
+            box-shadow: 0 0 10px rgba(255,154,0,0.3);
+        }
+        .btn-modal-confirm:hover {
+            box-shadow: 0 0 18px rgba(255,154,0,0.5);
+        }
+
+        footer {
+            text-align: center;
+            padding: 3rem 1rem;
+            margin-top: 4rem;
+            border-top: 1px solid rgba(160,165,181,0.1);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            backdrop-filter: blur(4px);
+        }
+        footer p {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+
+<div class="cyber-bg"></div>
+
+<header>
+    <h1>KUROSTORE</h1>
+    <div class="subtitle">黒ストア • Anshin & Hayai Digital Services</div>
+    <div class="tagline">Layanan Otomatis, Aman, Cepat, & Terpercaya</div>
+</header>
+
+<div class="container">
+
+    <h2 class="category-title">⚡ E-Wallet, Pulsa & Listrik</h2>
+    <div class="grid">
+        
+        <div class="card">
+            <h3>Top Up E-Wallet</h3>
+            <div class="form-group">
+                <label>Pilih Jenis E-Wallet</label>
+                <select id="ewallet_type">
+                    <option value="DANA">DANA</option>
+                    <option value="OVO">OVO</option>
+                    <option value="GoPay">GoPay</option>
+                    <option value="ShopeePay">ShopeePay</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Nomor HP E-Wallet Anda</label>
+                <input type="text" id="ewallet_id" placeholder="Contoh: 0831xxxxxxxx">
+            </div>
+            <div class="form-group">
+                <label>Pilih Nominal Saldo:</label>
+                <div class="price-grid" id="grid_ewallet">
+                    <div class="price-item" onclick="selectItem('ewallet', this, 'Saldo 10.000', 11500)">
+                        <span class="item-title">Saldo 10.000</span><span class="item-cost">Rp 11.500</span>
+                    </div>
+                    <div class="price-item" onclick="selectItem('ewallet', this, 'Saldo 20.000', 21500)">
+                        <span class="item-title">Saldo 20.000</span><span class="item-cost">Rp 21.500</span>
+                    </div>
+                    <div class="price-item" onclick="selectItem('ewallet', this, 'Saldo 50.000', 51500)">
+                        <span class="item-title">Saldo 50.000</span><span class="item-cost">Rp 51.500</span>
+                    </div>
+                    <div class="price-item" onclick="selectItem('ewallet', this, 'Saldo 100.000', 101500)">
+                        <span class="item-title">Saldo 100.000</span><span class="item-cost">Rp 101.500</span>
+                    </div>
+                </div>
+            </div>
+            <button class="btn-order" onclick="processEwallet()">Top Up Saldo</button>
+        </div>
+
+        <div class="card">
+            <h3>Refill Pulsa Reguler</h3>
+            <div class="form-group">
+                <label>Pilih Provider Jaringan</label>
+                <select id="pulsa_provider">
+                    <option value="Telkomsel">Telkomsel</option>
+                    <option value="Indosat Ooredoo">Indosat Ooredoo</option>
+                    <option value="XL Axiata">XL Axiata</option>
+                    <option value="Axis">Axis</option>
+                    <option value="Tri (3)">Tri (3)</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Nomor HP Target Pengisian</label>
+                <input type="text" id="pulsa_id" placeholder="Contoh: 0812xxxxxxxx">
+            </div>
+            <div class="form-group">
+                <label>Pilih Nominal Pulsa:</label>
+                <div class="price-grid" id="grid_pulsa">
+                    <div class="price-item" onclick="selectItem('pulsa', this, 'Pulsa 10.000', 11500)">
+                        <span class="item-title">Pulsa 10.000</span><span class="item-cost">Rp 11.500</span>
+                    </div>
+                    <div class="price-item" onclick="selectItem('pulsa', this, 'Pulsa 20.000', 21200)">
+                        <span class="item-title">Pulsa 20.000</span><span class="item-cost">Rp 21.200</span>
+                    </div>
+                    <div class="price-item" onclick="selectItem('pulsa', this, 'Pulsa 50.000', 51000)">
+                        <span class="item-title">Pulsa 50.000</span><span class="item-cost">Rp 51.000</span>
+                    </div>
+                    <div class="price-item" onclick="selectItem('pulsa', this, 'Pulsa 100.000', 99500)">
+                        <span class="item-title">Pulsa 100.000</span><span class="item-cost">Rp 99.500</span>
+                    </div>
+                </div>
+            </div>
+            <button class="btn-order" onclick="processPulsa()">Top Up Pulsa</button>
+        </div>
+    </div>
+
+    <h2 class="category-title">🎮 Game Top Up</h2>
+    <div class="grid">
+        <div class="card">
+            <h3>Valorant Points (VP)</h3>
+            <div class="form-group">
+                <label>Riot ID + Tag / Kode Voucher</label>
+                <input type="text" id="val_id" placeholder="Contoh: KuroID#1234">
+            </div>
+            <div class="form-group">
+                <label>Pilih Nominal Paket:</label>
+                <div class="price-grid" id="grid_val">
+                    <div class="section-divider">Indonesia Region (Riot ID / Voucher)</div>
+                    <div class="price-item" onclick="selectItem('val', this, '125 VP (Riot ID)', 15000)">
+                        <span class="item-title">125 VP (ID)</span><span class="item-cost">Rp 15.000</span>
+                    </div>
+                    <div class="price-item" onclick="selectItem('val', this, '125 VP (Voucher)', 14500)">
+                        <span class="item-title">125 VP (Vch)</span><span class="item-cost">Rp 14.500</span>
+                    </div>
+                    <div class="price-item" onclick="selectItem('val', this, '380 VP (Riot ID)', 43000)">
+                        <span class="item-title">380 VP (ID)</span><span class="item-cost">Rp 43.000</span>
+                    </div>
+                    <div class="price-item" onclick="selectItem('val', this, '380 VP (Voucher)', 42000)">
+                        <span class="item-title">380 VP (Vch)</span><span class="item-cost">Rp 42.000</span>
+                    </div>
+                    <div class="section-divider">Valorant Mobile (China)</div>
+                    <div class="price-item" onclick="selectItem('val', this, '60 VP China', 18200)">
+                        <span class="item-title">60 VP (CN)</span><span class="item-cost">Rp 18.200</span>
+                    </div>
+                    <div class="price-item" onclick="selectItem('val', this, '680 VP China', 203500)">
+                        <span class="item-title">680 VP (CN)</span><span class="item-cost">Rp 203.500</span>
+                    </div>
+                </div>
+            </div>
+            <button class="btn-order" onclick="processStandard('Valorant Points', 'val_id', 'val')">Bayar Sekarang</button>
+        </div>
+
+        <div class="card">
+            <h3>PUBG KR/JP (UC)</h3>
+            <div class="form-group">
+                <label>Data Login (Akun/Metode)</label>
+                <input type="text" id="pubg_id" placeholder="Contoh: Twitter / FB / ID Game">
+            </div>
+            <div class="form-group">
+                <label>Pilih Nominal UC:</label>
+                <div class="price-grid" id="grid_pubg">
+                    <div class="price-item" onclick="selectItem('pubg', this, '60 + 10 UC', 23000)">
+                        <span class="item-title">60+10 UC</span><span class="item-cost">Rp 23.000</span>
+                    </div>
+                    <div class="price-item" onclick="selectItem('pubg', this, '300 + 25 UC', 950
